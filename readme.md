@@ -1,6 +1,34 @@
 <!DOCTYPE html>
 <html>
-<script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+};
+</script>
 <body>    
 <h1>A simple view of the aviation safety numbers in Brasil</h1>
 
@@ -30,11 +58,9 @@
 <p>Looking at the other types of flight like private, experimental and charter the numbers are bigger but still good. To be honest, i saw these data with optimism and i will explain why. A great part of the accidents can be prevented by doing some basic things like respecting the regulations, air traffic rules, and maintenance schedules.in US or Europe, aircrafts equipped with Instruments that help the pilot to avoid some critical situations are the rule . with the modernization of our private fleet, accidents caused by these situations, like controlled flight into terrain(CFIT), will become rarer in Brasil.</p> 
 <h2>Exploring the dataset with Folium</h2>
 <p>I ploted all the ocourrencies of this work in a map using the city and state name  provided by Cenipa(i didn't use the latitude and longitude because it not have a common standard in the dataset). Here, you can explore the acidents using interactivity and discover how they are spread in the country territory! Feel free to click on the markers and find out more details of the event(In portuguese,sorry i can't translate all the dataset)</p>
-
 <div w3-include-html="mapocorrencias.html"></div> 
-
 <script>
-w3IncludeHTML();
+includeHTML();
 </script>
 </body>
 </html>
