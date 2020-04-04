@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head> 
-    <script src="jquery.js"></script> 
+    <script src="jquery-3.4.1.min"></script> 
     <script> 
     $(function(){
       $("#includedContent").load("mapocorrencias.html"); 
